@@ -15,18 +15,24 @@ No test suite is configured.
 
 ## Architecture
 
-This is a single-page React app (Vite + React 19) with all logic in `src/App.jsx`. There is no routing, no state management library, and no backend — all data lives in `useState` and is lost on refresh.
+Single-page React app (Vite + React 19). No routing, no state management library, no backend — all data lives in `useState` and is lost on refresh.
 
-**Known bug in the initial code:** `amount` is stored as a string in state, so `totalIncome` and `totalExpenses` use string concatenation instead of numeric addition — the summary cards show wrong totals. Fix by parsing `amount` to a number when adding a transaction or when reducing.
+**Component tree:**
+```
+App                        — holds transactions[] and handleAdd; renders children
+├── Summary                — receives transactions[], computes totalIncome/totalExpenses/balance internally
+├── TransactionForm        — owns its own form state; calls onAdd(transaction) prop when submitted
+└── TransactionList        — receives transactions[]; owns its own filter state (filterType, filterCategory)
+```
 
 **Data shape for a transaction:**
 ```js
-{ id: number, description: string, amount: string|number, type: "income"|"expense", category: string, date: "YYYY-MM-DD" }
+{ id: number, description: string, amount: number, type: "income"|"expense", category: string, date: "YYYY-MM-DD" }
 ```
 
-**Categories** (hardcoded array in `App.jsx`): `food`, `housing`, `utilities`, `transport`, `entertainment`, `salary`, `other`.
+**Categories** (hardcoded in both `TransactionForm.jsx` and `TransactionList.jsx`): `food`, `housing`, `utilities`, `transport`, `entertainment`, `salary`, `other`.
 
-The CSS class `.delete-btn` is defined in `App.css` but the delete feature is not yet implemented in `App.jsx` — the table has no delete column.
+The CSS class `.delete-btn` is defined in `App.css` but the delete feature is not yet implemented — the table has no delete column.
 
 ## Project context
 
