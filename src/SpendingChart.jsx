@@ -1,14 +1,6 @@
 import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
-const COLORS = ['#3451b2', '#0d9488', '#e11d48', '#f59e0b', '#8b5cf6', '#ec4899', '#64748b'];
-
-const tooltipStyle = {
-  borderRadius: '8px',
-  border: 'none',
-  boxShadow: '0 4px 12px -2px rgb(0 0 0 / 0.12)',
-  fontFamily: "'DM Sans', system-ui, sans-serif",
-  fontSize: '13px',
-};
+const COLORS = ['#5B21B6', '#7C3AED', '#16A34A', '#DC2626', '#2563EB', '#D97706', '#0891B2'];
 
 export default function SpendingChart({ transactions }) {
   const data = Object.entries(
@@ -18,10 +10,7 @@ export default function SpendingChart({ transactions }) {
         acc[t.category] = (acc[t.category] || 0) + t.amount;
         return acc;
       }, {})
-  ).map(([name, value]) => ({
-    name: name.charAt(0).toUpperCase() + name.slice(1),
-    value,
-  }));
+  ).map(([name, value]) => ({ name, value }));
 
   if (data.length === 0) return null;
 
@@ -34,7 +23,7 @@ export default function SpendingChart({ transactions }) {
             data={data}
             cx="50%"
             cy="50%"
-            outerRadius={105}
+            outerRadius={100}
             dataKey="value"
             label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
             labelLine={false}
@@ -43,11 +32,8 @@ export default function SpendingChart({ transactions }) {
               <Cell key={index} fill={COLORS[index % COLORS.length]} />
             ))}
           </Pie>
-          <Tooltip
-            formatter={(value) => [`$${value.toFixed(2)}`, 'Amount']}
-            contentStyle={tooltipStyle}
-          />
-          <Legend iconType="circle" iconSize={8} />
+          <Tooltip formatter={(value) => [`$${value.toFixed(2)}`, 'Amount']} />
+          <Legend />
         </PieChart>
       </ResponsiveContainer>
     </div>

@@ -10,15 +10,15 @@ function Summary({ transactions }) {
   const balance = totalIncome - totalExpenses;
   return (
     <div className="summary">
-      <div className="summary-card">
+      <div className="summary-card summary-card--income">
         <h3>Income</h3>
         <p className="income-amount">${totalIncome}</p>
       </div>
-      <div className="summary-card">
+      <div className="summary-card summary-card--expense">
         <h3>Expenses</h3>
         <p className="expense-amount">${totalExpenses}</p>
       </div>
-      <div className="summary-card">
+      <div className="summary-card summary-card--balance">
         <h3>Balance</h3>
         <p className="balance-amount">${balance}</p>
       </div>
